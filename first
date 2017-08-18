@@ -1,0 +1,65 @@
+%{
+#include <stdio.h>
+int wordCount = 0;
+int numCount = 0;
+int row = 1;
+int col = 1;
+%}
+op [+"-"*"/"="|""^""!""&""%"]|,|"."
+macro #
+compareop ["==""<="">="<>]
+digit [0-9]
+hexdigit [0-9a-fA-F]
+octdigit [0-7]
+hexnum 0x{hexdigit}+
+octnum 0{octdigit}+
+numbers {digit}+
+int {hexnum}|{octnum}|{numbers}
+letter [A-Za-z]
+id "_"?{letter}({digit}|{letter}|_)*
+delim [" "]
+whitespace {delim}+
+%%
+\n {row++;col=1;}
+\t {col+=4;}
+"//".*\n {row++;col=1;printf("%s is comment\n", yytext);}
+"/*".*"*/"\n {printf("%s is comment\n", yytext);}
+{op} {printf("%s is a op\n", yytext);col+=yyleng;}
+{macro} {printf("%s is a macro\n", yytext);col+=yyleng;}
+{compareop} {printf("%s is a compareop\n", yytext);col+=yyleng;}
+; {printf("%s is a bound\n", yytext);col+=yyleng;}
+"(" {printf("%s is a left_paren\n", yytext);col+=yyleng;}
+")" {printf("%s is a right_paren\n", yytext);col+=yyleng;}
+"{" {printf("%s is a left_flower_paren\n", yytext);col+=yyleng;}
+"}" {printf("%s is a right_flower_paren\n", yytext);col+=yyleng;}
+"[" {printf("%s is a left_square_paren\n", yytext);col+=yyleng;}
+"]" {printf("%s is a right_square_paren\n", yytext);col+=yyleng;}
+{hexnum} {printf("%s is a hexnum\n", yytext);col+=yyleng;}
+{octnum} {printf("%s is a octnum\n", yytext);col+=yyleng;}
+{id} {wordCount++; printf("%s is a id\n", yytext);col+=yyleng;}
+{whitespace} {col+=yyleng;}
+{numbers} {numCount++;printf("%s is num\n", yytext);col+=yyleng;}
+. {printf("%d_%d : \"%s\" is an illegal character\n",row, col, yytext);col+=yyleng;}
+%%
+/*void main()
+{
+	yylex();
+	printf("Count of words are %d\n", wordCount);
+	printf("Count of numbers are %d\n", numCount);
+}
+*/
+
+int main (int argc, char ** argv)
+{
+	int c,j=0;
+	int __asasa;
+	if (argc>=2){
+	  if ((yyin = fopen(argv[1], "r")) == NULL){
+	    printf("Can't open file %s\n", argv[1]);
+	    return 1;
+	  }else{
+	  	yylex();
+	  }
+	}
+	return 0;
+}

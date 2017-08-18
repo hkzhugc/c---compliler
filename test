@@ -1,0 +1,67 @@
+
+int a[10];
+struct g
+{
+	int b;
+	int c;
+	float f;
+}d;
+struct gg
+{
+	int b;
+	int c;
+	float f;
+	struct g a;
+}ss;
+
+int a;
+
+
+struct g q(int asd, float basd)
+{
+	int a;
+	int b;
+	float c;
+	s();
+	ss.a.f;
+	ss.b.a;
+	a+b;
+	a*b;
+	a*c;
+	d + f;
+	asd + sg;
+	q(a,c);
+	return a;
+}
+
+int p()
+{
+	struct g xixi;
+//int b[2][2];
+	a[10];
+	b[10][10];
+	b[1][1][1];
+	xixi.f;
+	//a[1.0];
+	q(1, 2);
+	//a[1] = q(1, 2.5);
+	q(1, d.f).f;
+	xixi = q(1, d.f);
+	a.s;
+	d.f;
+	a[2] = 2.5;
+	a[2] = 2;
+}
+
+int p(int qwe, float qwed)
+{
+	qwe;
+	qwed;
+	{
+		int qwe;
+		int we;
+	}
+	qwe;
+	we;
+	2 = qwe;
+}
